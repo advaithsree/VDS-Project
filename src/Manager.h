@@ -86,48 +86,10 @@ namespace ClassProject {
             bool is_variable;   //is true if the entry of this ID is a variable; false if not.
     };
 
-}
-
-/*
-namespace std {
-//define a hashing for our custom data-type ClassProject::Unique_table_key
-  template <>
-  struct hash<ClassProject::Unique_table_key>
-  {
-    std::size_t operator()(const ClassProject::Unique_table_key& k) const
-    {
-      using std::size_t;
-      using std::hash;
-      using std::string;
-
-      // Compute individual hash values for first,
-      // second and third and combine them using XOR
-      // and bit shifting:
-
-      return ((hash<ClassProject::variable>()(k.top_var_name)
-               ^ (hash<ClassProject::BDD_ID>()(k.id_low) << 1)) >> 1)
-               ^ (hash<ClassProject::BDD_ID>()(k.id_high) << 1);
-    }
-  };
-
-}
-*/
-
-namespace ClassProject {
     class ManagerImplementation {
     public:
         ManagerImplementation();    //Constructor
         void init(); //initialize ManagerImplementation
-
-
-        //BDD_ID id_node_true  = ID_TRUE;   //ID of node representing TRUE always 1
-        //BDD_ID id_node_false = ID_FALSE;   //ID of node representing TRUE always 0
-        //std::unordered_map<Unique_table_key, Unique_table_entry> unique_table;  //our data-structure for the unique-table
-        //std::unordered_map<BDD_ID, Unique_table_entry> unique_table;
-
-        //is BDD_ID or (top_var,id_left,id_right) the key?!?!?
-        //i need a data-structure with BDD_ID as the key!!!!!
-
 
         BDD_ID ite(const BDD_ID i, const BDD_ID t, const BDD_ID e);
 
@@ -175,25 +137,3 @@ namespace ClassProject {
 // Local Variables:
 // mode: c++
 // End:
-
-
-
-
-/*
-    // Create an unordered_map of three strings (that map to strings)
-    std::unordered_map<std::string, std::string> u = {
-        {"RED","#FF0000"},
-        {"GREEN","#00FF00"},
-        {"BLUE","#0000FF"}
-    };
- 
-    // Iterate and print keys and values of unordered_map
-    for( const auto& n : u ) {
-        std::cout << "Key:[" << n.first << "] Value:[" << n.second << "]\n";
-    }
- 
-    // Add two new entries to the unordered_map
-    u["BLACK"] = "#000000";
-    u["WHITE"] = "#FFFFFF";
-
-*/

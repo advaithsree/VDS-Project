@@ -24,6 +24,9 @@ Unique_table_entry::Unique_table_entry(){
 }
 
 
+ManagerImplementation::ManagerImplementation(){
+}
+
 
 
 
@@ -108,6 +111,9 @@ BDD_ID ManagerImplementation::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e
     }
     
 
+    std::cout << "top_var_priority  " << top_var_priority << std::endl;
+
+
 
     //access top_variable through table
     Unique_identifier identifier;
@@ -142,13 +148,19 @@ BDD_ID ManagerImplementation::ite(const BDD_ID i, const BDD_ID t, const BDD_ID e
         e_low = e;
     }
 
+    std::cout << "high_input:  " << i_high << "  "<< t_high << "  "  << e_high << std::endl;
+    std::cout << "low_input:  " << i_low << "  "<< t_low << "  "  << e_low << std::endl;
+
+
+
     BDD_ID recursion_high, recursion_low;
 
     //recursion for high
     recursion_high = ite(i_high, t_high, e_high);
-
+    std::cout << "recursion_high  " << recursion_high << std::endl;
     //recursion for low
-    recursion_low = ite(i_high, t_high, e_high);
+    recursion_low = ite(i_low, t_low, e_low);
+    std::cout << "recursion_low  " << recursion_low << std::endl;
 
     //add result to unique_table: 
     identifier.top_var = top_var_priority;
@@ -269,7 +281,6 @@ Unique_table_entry ManagerImplementation::get_table_entry(BDD_ID x){
     return unique_table.at(x);
 }
 
-
 BDD_ID ManagerImplementation::add_table_entry(Unique_identifier identifier, std::string label){
     latest_id_value++;
 
@@ -291,9 +302,6 @@ std::string ManagerImplementation::get_top_var(BDD_ID x){
     return unique_table.at(x).identifier.top_var;
 }
 
-
-ManagerImplementation::ManagerImplementation(){
-}
 }
 //begin with the parsing of the input function.
 //input function has format : f = and(or(a,b),and(c,d)) then construct an Abstract-Syntax-Tree from it

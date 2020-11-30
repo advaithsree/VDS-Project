@@ -259,8 +259,7 @@ TEST(ManagerTest, iteTermincalCasesTest) {
     EXPECT_EQ(manager.ite(1,5,1), 5);
 }
 
-
-TEST(ManagerTest, iteORTest) {
+TEST(ManagerTest, add_table_entryTest) {
     ClassProject::ManagerImplementation manager;
     manager.init();
 
@@ -283,34 +282,79 @@ TEST(ManagerTest, iteORTest) {
 
     manager.createVar("b");
 
-    ClassProject::Unique_identifier identifier_b;
-    identifier_b.id_high = ClassProject::ID_TRUE;
-    identifier_b.id_low  = ClassProject::ID_FALSE;
-    identifier_b.top_var = "b";
+    ClassProject::Unique_identifier added_identifier;
+    added_identifier.id_high = ClassProject::ID_TRUE;
+    added_identifier.id_low  = 3;
+    added_identifier.top_var = "xxx";
 
 
-    ClassProject::Unique_table_entry entry_b;
-    entry_b.id = 3;
-    entry_b.label = "b";
-    entry_b.identifier = identifier_b;
-    entry_b.is_variable = true;
+    ClassProject::Unique_table_entry new_entry;
+    new_entry.id = 4;
+    new_entry.label = "Test";
+    new_entry.identifier = added_identifier;
+    new_entry.is_variable = false;
 
+
+    ClassProject::BDD_ID new_id;
+    new_id = manager.add_table_entry(added_identifier, "Test");
+    
+    Unique_table_entry_EQ(manager.get_table_entry(4), new_entry);
+
+}
+
+
+
+
+
+
+
+TEST(ManagerTest, iteORTest) {
+    ClassProject::ManagerImplementation manager;
+    manager.init();
+
+    manager.createVar("a");
+    manager.createVar("b");
 
     //or(a,b) = ite(a, 1, b)
+    manager.ite(2, 1, 3.);
     ClassProject::Unique_table_entry result_entry = manager.get_table_entry(4);
 
     ClassProject::Unique_identifier identifier_result;
     identifier_result.id_high = ClassProject::ID_TRUE;
-    identifier_result.id_low  = entry_b.id;
+    identifier_result.id_low  = 3;
     identifier_result.top_var = "a";
     //(a,1,3)
 
-    manager.ite(entry_a.id, 1, entry_b.id);
     Unique_identifier_EQ(manager.get_table_entry(4).identifier, identifier_result);
 
 }
 
 
+
+
+
+
+
+TEST(ManagerTest, iteANDTest) {
+    ClassProject::ManagerImplementation manager;
+    manager.init();
+
+    manager.createVar("a");
+    manager.createVar("b");
+
+    //and(a,b) = ite(a, b, 0)
+    manager.ite(2, 3, 0.);
+    ClassProject::Unique_table_entry result_entry = manager.get_table_entry(4);
+
+    ClassProject::Unique_identifier identifier_result;
+    identifier_result.id_high = 3;
+    identifier_result.id_low  = ClassProject::ID_FALSE;
+    identifier_result.top_var = "a";
+    //(a,3,0)
+
+    Unique_identifier_EQ(manager.get_table_entry(4).identifier, identifier_result);
+
+}
 
 
 
