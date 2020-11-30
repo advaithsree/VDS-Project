@@ -12,4 +12,8 @@ int main(int argc, char* argv[])
 {
    
     std::cout << "Nothing implemented, yet" << std::endl;
+    ClassProject::ManagerImplementation manager;
+    manager.init();
+    std::cout << "something implemented, yet" << std::endl;
+
 }
