@@ -104,6 +104,25 @@ namespace ClassProject {
 
         std::string getTopVarName(const BDD_ID &root);  //returns asghar the name of the top-variable of the node root
 
+        void findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root);    //returns the set of BDD nodes whih are reachable from the BDD node root(including itself)
+        void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root);
+
+
+        BDD_ID and2(const BDD_ID a, const BDD_ID b);
+        BDD_ID or2(const BDD_ID a, const BDD_ID b);
+        BDD_ID xor2(const BDD_ID a, const BDD_ID b);
+        BDD_ID neg(const BDD_ID a);
+        BDD_ID nand2(const BDD_ID a, const BDD_ID b);
+        BDD_ID nor2(const BDD_ID a, const BDD_ID b);
+
+        BDD_ID coFactorFalse(const BDD_ID f, BDD_ID x);
+        BDD_ID coFactorFalse(const BDD_ID f);
+
+        BDD_ID coFactorTrue(const BDD_ID f, BDD_ID x);
+        BDD_ID coFactorTrue(const BDD_ID f);
+
+        BDD_ID coFactorCase(const BDD_ID f, BDD_ID x, bool cofactor_case);
+
 
 
         const BDD_ID &True();
@@ -114,6 +133,7 @@ namespace ClassProject {
 
         Unique_table_entry get_table_entry(BDD_ID x);
         BDD_ID add_table_entry(Unique_identifier identifier, std::string label);
+        std::pair<bool, BDD_ID> check_if_unique_identifier_in_table(Unique_identifier x);
         std::string get_top_var(BDD_ID x);
 
 
